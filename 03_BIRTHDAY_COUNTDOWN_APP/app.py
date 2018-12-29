@@ -18,11 +18,19 @@ def get_user_birthday():
 
 
 def compute_days_between_dates(original_date, target_date):
-    pass
+    # The line of code below handles the logic that allows us get a usable date differnce.
+    this_year = datetime.date(target_date.year, original_date.month, original_date.day)
+    dt = this_year - target_date
 
+    return dt.days
 
-def print_birthday_info():
-    pass
+def print_birthday_info(days):
+    if days < 0:
+        print('You had your birthday {} days ago'.format(-days))
+    elif days > 0:
+        print('Your birthday is in {} days time'.format(days))
+    else:
+        print('Happy Birthday!!!')
 
 
 def main():
@@ -33,4 +41,4 @@ def main():
     print_birthday_info(number_of_days)
 
 
-#get_user_birthday()
+main()
