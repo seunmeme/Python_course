@@ -25,7 +25,26 @@ def get_weather_from_html(html):
     condition = soup.find(class_ = 'condition-icon').get_text()
     temp = soup.find(class_ = 'wu-unit-temperature').find(class_ = 'wu-value').get_text()
     scale = soup.find(class_ = 'wu-unit-temperature').find(class_ = 'wu-label').get_text()
+    
+    loc = cleanup_text(loc)
+    loc = find_city_and_state_from_location(loc)
+    condition = cleanup_text(condition)
+    temp = cleanup_text(temp)
+    scale = cleanup_text(scale)
+
     print(condition, temp, scale, loc)
+
+
+def cleanup_text(text):
+    if not text:
+        return text
+
+    text = text.strip()
+    return text
+
+def find_city_and_state_from_location(loc: str):
+    parts = loc.split('\n')
+    return parts[0].strip()
 
 
 if __name__ == '__main__':
