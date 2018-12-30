@@ -2,13 +2,13 @@ import datetime
 
 def print_header():
     print('-------------------------------------')
-    print('             BIRTHDAY APP       ')
+    print('             BIRTHDAY APP            ')
     print('-------------------------------------')
     print()
 
 
 def get_user_birthday():
-    print('When were you born')
+    print('When were you born?')
     year = int(input('Year [YYYY]: '))
     month = int(input('Month [MM]: '))
     day = int(input('Day [DD]: '))
