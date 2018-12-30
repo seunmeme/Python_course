@@ -1,6 +1,13 @@
 import os
 
 def load(name):
+    """
+    This method creates and loads a new journal.
+
+    :param name: The basename of the journal to load.
+    :return: A new journal data stucture populated with the file data.
+    """
+
     data = []
     filename = get_full_path(name)
     if os.path.exists(filename):
