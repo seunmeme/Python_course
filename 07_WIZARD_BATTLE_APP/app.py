@@ -1,7 +1,7 @@
 import random
 import time
 
-from actors import Creature, Wizard
+from actors import Creature, Wizard, SmallAnimal, Dragon
 
 
 def main():
@@ -18,14 +18,14 @@ def print_header():
 
 def game_loop():
     creatures = [
-        Creature('Toad', 1),
-        Creature('Bat', 3),
+        SmallAnimal('Toad', 1),
+        SmallAnimal('Bat', 3),
         Creature('Tiger', 12),  
-        Creature('Dragon', 50),
-        Creature('Evil Wizard', 1000)
+        Dragon('Dragon', 50, 75, True),
+        Wizard('Evil Wizard', 1000)
     ]
 
-    print(creatures)
+    # print(creatures)
 
     hero = Wizard('Gandalf', 75)
 
@@ -36,23 +36,28 @@ def game_loop():
         print()
 
         cmd = input('Do you want to [a]ttack, [r]unaway or [l]ook around? ')
+        print()
         if cmd == 'a':
             if hero.attack(active_creature):
                 creatures.remove(active_creature)
             else:
                 print('The wizard runs and hide, taking the time to recover...')
-                time.sleep(7)
+                time.sleep(5)
                 print('The wizard returns revitalized!')
         elif cmd == 'r':
             print('The wizard has become unsure of his power and flees!!!')
         elif cmd == 'l':
             print('The wizard {} takes a look at the surroundings and sees:'.format(hero.name))
             for c in creatures:
-                print('* A {} of level {} '.format(
+                print('* A/An {} of level {} '.format(
                     c.name, c.level
                 ))
         else:
             print('Exiting game... Bye!')
+            break
+        
+        if not creatures:
+            print('You have defeated all creatures. Weldone!')
             break
 
         print()
