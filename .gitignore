@@ -1,5 +1,5 @@
 .vscode
 .DS_Store
 __pycache__/
-weather_app_env
+python_environments
 
