@@ -19,18 +19,19 @@ def main():
 
     matches = search_folders(folder, text)
     for m in matches:
-        # print(m)
         print('-------------- MATCH -----------------')
         print('file: ' + m.file)
         print('line: {}'.format(m.line))
         print('match: ' + m.text.strip())
         print()
 
+
 def print_header():
     print('---------------------------------')
     print('       FILE SEARCH APP')
     print('---------------------------------')
     print()
+
 
 def get_folder_from_user():
     folder = input('What folder do you want to search? ')
@@ -42,12 +43,13 @@ def get_folder_from_user():
 
     return os.path.abspath(folder)
 
+
 def get_file_text_from_user():
     text = input('What are you searching for [ single phrases only ]? ')
     return text.lower()
 
+
 def search_folders(folder, text):
-    # print('Would search {} for {}'.format(folder, text))
     items = os.listdir(folder)
 
     for item in items:
@@ -55,10 +57,12 @@ def search_folders(folder, text):
 
         full_item = os.path.join(folder, item)
         if os.path.isdir(full_item):
-            continue
-
-        matches = search_file(full_item, text)
-        all_matches.extend(matches)
+            # Recursion applied            
+            matches = search_folders(full_item, text)
+            all_matches.extend(matches)
+        else:
+            matches = search_file(full_item, text)
+            all_matches.extend(matches)
 
         return all_matches
 
@@ -74,7 +78,6 @@ def search_file(filename, search_text):
                 matches.append(m)
 
         return matches
-
 
 
 if __name__ == '__main__':
