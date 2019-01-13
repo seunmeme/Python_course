@@ -18,12 +18,14 @@ def main():
         return    
 
     matches = search_folders(folder, text)
+    match_count = 0
     for m in matches:
-        print('-------------- MATCH -----------------')
-        print('file: ' + m.file)
-        print('line: {}'.format(m.line))
-        print('match: ' + m.text.strip())
-        print()
+        match_count += 1
+        # print('-------------- MATCH -----------------')
+        # print('file: ' + m.file)
+        # print('line: {}'.format(m.line))
+        # print('match: ' + m.text.strip())
+    print('Found {:,} matches.'.format(match_count))
 
 
 def print_header():
@@ -45,7 +47,7 @@ def get_folder_from_user():
 
 
 def get_file_text_from_user():
-    text = input('What are you searching for [ single phrases only ]? ')
+    text = input('What are you searching for [single phrases only]? ')
     return text.lower()
 
 
@@ -53,31 +55,34 @@ def search_folders(folder, text):
     items = os.listdir(folder)
 
     for item in items:
-        all_matches = []
-
+        # all_matches = []
         full_item = os.path.join(folder, item)
         if os.path.isdir(full_item):
             # Recursion applied            
-            matches = search_folders(full_item, text)
-            all_matches.extend(matches)
+            yield from search_folders(full_item, text)
+            # all_matches.extend(matches)
+            # for m in matches:
+            #     yield m
         else:
-            matches = search_file(full_item, text)
-            all_matches.extend(matches)
+            yield from search_file(full_item, text)
+            # all_matches.extend(matches)
+            # for m in matches:
+            #     yield m
 
-        return all_matches
+        # return all_matches
 
 
 def search_file(filename, search_text):
-    matches = []
+    # matches = []
     with open(filename, 'r', encoding='utf-8') as fin:
         line_num = 0
         for line in fin:
             line_num += 1
             if line.lower().find(search_text) >= 0:
                 m = SearchResult(line = line_num, file = filename, text = line)
-                matches.append(m)
-
-        return matches
+                # matches.append(m)
+                yield m
+        # return matches
 
 
 if __name__ == '__main__':
